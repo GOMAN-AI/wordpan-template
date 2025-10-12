@@ -26,7 +26,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { supabase } from "@/lib/supabase"
+import { useUser } from "@/contexts/UserContext"
 import { useNavigate } from "react-router-dom"
 
 export function NavUser({
@@ -39,11 +39,16 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const { signOut } = useUser()
   const navigate = useNavigate()
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    navigate('/auth/login')
+    try {
+      await signOut()
+      navigate('/auth/login')
+    } catch (error) {
+      console.error('Failed to sign out:', error)
+    }
   }
 
   return (

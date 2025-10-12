@@ -1,12 +1,12 @@
 import { Navigate, useLocation, useSearchParams } from 'react-router-dom'
-import { useCurrentUser } from '@/hooks/use-current-user'
+import { useUser } from '@/contexts/UserContext'
 
 interface AuthGuardProps {
   children: React.ReactNode
 }
 
 export function AuthGuard({ children }: AuthGuardProps) {
-  const { user, loading } = useCurrentUser()
+  const { user, loading } = useUser()
   const location = useLocation()
   const [searchParams] = useSearchParams()
 
